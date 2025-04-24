@@ -71,7 +71,7 @@
   <p>Opa! Seja bem-vindo ao K-Churrasco do Guto, a casa do X mais amado da cidade 😎🍟<br>
   Antes de abrir tua comanda, deixa eu te conhecer melhor rapidinho…</p>
 
-  <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec" target="hidden_iframe">
+  <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec">
     <label for="nome">Como tu te chama?</label>
     <input type="text" name="nome" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
 
@@ -94,8 +94,6 @@
 
     <button type="submit" id="btn-enviar">Ver minha comanda 🍔</button>
   </form>
-
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
   <script>
     const nome = document.getElementById('nome');
@@ -120,6 +118,7 @@
 
     const hoje = new Date();
     const diaSemana = hoje.getDay();
+
     function atualizarTextoBotao() {
       if (diaSemana === 3) {
         btn.textContent = "Ver minha comanda com frete grátis 🎉";
@@ -127,10 +126,14 @@
         btn.textContent = "Ver minha comanda 🍔";
       }
     }
+
     atualizarTextoBotao();
 
     document.getElementById("form-pre-selo").addEventListener("submit", function (e) {
       e.preventDefault();
+
+      btn.disabled = true;
+      btn.textContent = "Carregando... ⏳";
 
       const form = e.target;
       const dados = new FormData(form);
@@ -139,15 +142,18 @@
         method: 'POST',
         body: dados
       }).then(() => {
-        const dia = new Date().getDay();
-        if (dia === 3) {
-          window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa";
-        } else {
-          window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
-        }
+        setTimeout(() => {
+          if (diaSemana === 3) {
+            window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa";
+          } else {
+            window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
+          }
+        }, 500);
       }).catch((error) => {
-        alert('Algo deu errado. Tenta novamente 🙏');
+        alert('Algo deu errado. Tenta de novo ou chama no Whats 😢');
         console.error(error);
+        btn.disabled = false;
+        atualizarTextoBotao();
       });
     });
   </script>
