@@ -76,30 +76,22 @@
     }
   </style>
 </head>
-
 <body>
-
   <!-- Google Tag Manager (noscript) -->
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53S7GGBR"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53S7GGBR"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
   <!-- BLOCO PARA NOVOS CLIENTES -->
   <div id="bloco-novo">
     <img class="imagem-guto" src="https://i.imgur.com/e8F0ua2.png" alt="Imagem do Guto" />
-
     <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec">
       <label for="nome">Como tu te chama?</label>
       <input type="text" name="nome" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
-
       <label for="idade">Quantos anos tu tem?</label>
       <input type="number" name="idade" id="idade" placeholder="Pode mentir, eu não conto 😂" required>
-
       <label for="bairro">De qual bairro ou cidade tu é?</label>
       <input type="text" name="bairro" id="bairro" placeholder="Ex: Centro, Portão..." required>
-
       <label for="origem">E me conta… de onde tu tá vindo?</label>
       <select name="origem" id="origem" required>
         <option value="">Seleciona uma opção</option>
@@ -110,7 +102,6 @@
         <option value="Já sou cliente">Já sou cliente</option>
         <option value="Outros">Outros</option>
       </select>
-
       <button type="submit" id="btn-enviar">Ver minha comanda 🍔</button>
     </form>
   </div>
@@ -153,7 +144,6 @@
         const idadeValida = idade.value.trim() !== '';
         const bairroValido = bairro.value.trim() !== '';
         const origemValida = origem.value !== '';
-
         btn.disabled = !(nomeValido && idadeValida && bairroValido && origemValida);
       }
 
@@ -166,10 +156,8 @@
         e.preventDefault();
         btn.disabled = true;
         btn.textContent = "Carregando... ⏳";
-
         const form = e.target;
         const dados = new FormData(form);
-
         fetch(form.action, {
           method: 'POST',
           body: dados
