@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pré-Selo | K-Churrasco do Guto</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background-image: url('https://i.imgur.com/Wqo4QyL.png');
       background-size: cover;
       background-position: center;
@@ -18,14 +18,12 @@
       background-color: #fff5e1;
     }
 
-    h1, .titulo-volta {
-      color: #000000;
-      text-align: center;
-      font-family: 'Impact', 'Arial Black', sans-serif;
-      font-size: 32px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 30px;
+    .imagem-guto {
+      width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 30px;
     }
 
     p, .mensagem-retorno {
@@ -73,14 +71,6 @@
       cursor: pointer;
     }
 
-    .imagem-guto {
-      width: 100%;
-      max-height: 350px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto 30px;
-    }
-
     .escondido {
       display: none;
     }
@@ -90,8 +80,7 @@
 
   <!-- BLOCO PARA NOVOS CLIENTES -->
   <div id="bloco-novo">
-    <img class="imagem-guto" src="https://i.imgur.com/e8F0ua2.png" alt="Imagem do Guto">
-    <h1>K-Churrasco do Guto</h1>
+    <img class="imagem-guto" src="https://i.imgur.com/e8F0ua2.png" alt="Imagem do Guto" />
     <p>Opa! Seja bem-vindo ao K-Churrasco do Guto, a casa do X mais amado da cidade 😎🍟<br>
     Antes de abrir tua comanda, deixa eu te conhecer melhor rapidinho…</p>
 
@@ -120,9 +109,8 @@
     </form>
   </div>
 
-  <!-- BLOCO PARA CLIENTE QUE VOLTOU -->
+  <!-- BLOCO PARA CLIENTES QUE VOLTARAM -->
   <div id="bloco-retorno" class="escondido">
-    <div class="titulo-volta">K-Churrasco do Guto</div>
     <div class="mensagem-retorno">
       Olha só quem voltou! 🧡<br><br>
       Tu nem imagina a alegria que é te ver aqui de novo. É tipo quando a batata sai no ponto certo: quentinha, crocante e perfeita! 🍟<br><br>
