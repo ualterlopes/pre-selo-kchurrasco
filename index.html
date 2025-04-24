@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,7 +16,7 @@
   </script>
   <!-- End Google Tag Manager -->
 
-  <!-- Google Analytics (por precaução, mas não recomendado duplicar com GTM) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MD35BBB0VK"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -23,6 +24,7 @@
     gtag('js', new Date());
     gtag('config', 'G-MD35BBB0VK');
   </script>
+  <!-- End Google Analytics -->
 
   <style>
     body {
@@ -80,14 +82,6 @@
       cursor: pointer;
     }
 
-    .mensagem-retorno {
-      text-align: center;
-      font-size: 20px;
-      color: white;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 2px #000000a0;
-    }
-
     .escondido {
       display: none;
     }
@@ -100,19 +94,15 @@
   <!-- End Google Tag Manager (noscript) -->
 
   <!-- BLOCO PARA NOVOS CLIENTES -->
- <div id="bloco-novo">
+  <div id="bloco-novo">
     <img class="imagem-guto" src="https://i.imgur.com/e8F0ua2.png" alt="Imagem do Guto" />
-
     <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec">
       <label for="nome">Como tu te chama?</label>
-      <input type="text" name="nome" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
-
+      <input type="text" name="nome" id="nome" required>
       <label for="idade">Quantos anos tu tem?</label>
-      <input type="number" name="idade" id="idade" placeholder="Pode mentir, eu não conto 😂" required>
-
+      <input type="number" name="idade" id="idade" required>
       <label for="bairro">De qual bairro ou cidade tu é?</label>
-      <input type="text" name="bairro" id="bairro" placeholder="Ex: Centro, Portão..." required>
-
+      <input type="text" name="bairro" id="bairro" required>
       <label for="origem">E me conta… de onde tu tá vindo?</label>
       <select name="origem" id="origem" required>
         <option value="">Seleciona uma opção</option>
@@ -123,7 +113,6 @@
         <option value="Já sou cliente">Já sou cliente</option>
         <option value="Outros">Outros</option>
       </select>
-
       <button type="submit" id="btn-enviar">Ver minha comanda 🍔</button>
     </form>
   </div>
