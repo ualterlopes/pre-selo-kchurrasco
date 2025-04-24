@@ -128,6 +128,28 @@
       }
     }
     atualizarTextoBotao();
+
+    document.getElementById("form-pre-selo").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const dados = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: dados
+      }).then(() => {
+        const dia = new Date().getDay();
+        if (dia === 3) {
+          window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa";
+        } else {
+          window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
+        }
+      }).catch((error) => {
+        alert('Algo deu errado. Tenta novamente 🙏');
+        console.error(error);
+      });
+    });
   </script>
 </body>
 </html>
