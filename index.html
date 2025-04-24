@@ -26,11 +26,12 @@
       letter-spacing: 1px;
       margin-bottom: 30px;
     }
-    p {
+    p, .mensagem-retorno {
       text-align: center;
       font-size: 18px;
       line-height: 1.6;
       margin-bottom: 40px;
+      color: #000;
     }
     label {
       display: block;
@@ -49,7 +50,7 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
-    button {
+    button, .link-retorno {
       margin-top: 30px;
       padding: 18px;
       width: 100%;
@@ -59,41 +60,59 @@
       font-size: 18px;
       border-radius: 8px;
       cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: block;
     }
     button:disabled {
       background-color: #999;
       cursor: not-allowed;
     }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>K-Churrasco do Guto</h1>
-  <p>Opa! Seja bem-vindo ao K-Churrasco do Guto, a casa do X mais amado da cidade 😎🍟<br>
-  Antes de abrir tua comanda, deixa eu te conhecer melhor rapidinho…</p>
+  <div id="bloco-novo">
+    <h1>K-Churrasco do Guto</h1>
+    <p>Opa! Seja bem-vindo ao K-Churrasco do Guto, a casa do X mais amado da cidade 😎🍟<br>
+    Antes de abrir tua comanda, deixa eu te conhecer melhor rapidinho…</p>
 
-  <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec">
-    <label for="nome">Como tu te chama?</label>
-    <input type="text" name="nome" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
+    <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec">
+      <label for="nome">Como tu te chama?</label>
+      <input type="text" name="nome" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
 
-    <label for="idade">Quantos anos tu tem?</label>
-    <input type="number" name="idade" id="idade" placeholder="Pode mentir, eu não conto 😂" required>
+      <label for="idade">Quantos anos tu tem?</label>
+      <input type="number" name="idade" id="idade" placeholder="Pode mentir, eu não conto 😂" required>
 
-    <label for="bairro">De qual bairro ou cidade tu é?</label>
-    <input type="text" name="bairro" id="bairro" placeholder="Ex: Centro, Portão..." required>
+      <label for="bairro">De qual bairro ou cidade tu é?</label>
+      <input type="text" name="bairro" id="bairro" placeholder="Ex: Centro, Portão..." required>
 
-    <label for="origem">E me conta… de onde tu tá vindo?</label>
-    <select name="origem" id="origem" required>
-      <option value="">Seleciona uma opção</option>
-      <option value="Instagram">Instagram</option>
-      <option value="Indicação de amigo">Indicação de amigo</option>
-      <option value="WhatsApp">WhatsApp</option>
-      <option value="Google">Google</option>
-      <option value="Já sou cliente">Já sou cliente</option>
-      <option value="Outros">Outros</option>
-    </select>
+      <label for="origem">E me conta… de onde tu tá vindo?</label>
+      <select name="origem" id="origem" required>
+        <option value="">Seleciona uma opção</option>
+        <option value="Instagram">Instagram</option>
+        <option value="Indicação de amigo">Indicação de amigo</option>
+        <option value="WhatsApp">WhatsApp</option>
+        <option value="Google">Google</option>
+        <option value="Já sou cliente">Já sou cliente</option>
+        <option value="Outros">Outros</option>
+      </select>
 
-    <button type="submit" id="btn-enviar">Ver minha comanda 🍔</button>
-  </form>
+      <button type="submit" id="btn-enviar">Ver minha comanda 🍔</button>
+    </form>
+  </div>
+
+  <div id="bloco-retorno" class="hidden">
+    <h1>K-Churrasco do Guto</h1>
+    <div class="mensagem-retorno">
+      Olha só quem voltou! 🧡<br><br>
+      Tu já é de casa, então não precisa responder tudo de novo.<br>
+      Só clicar abaixo e ver a comanda direto:
+    </div>
+    <a href="#" id="btn-retorno" class="link-retorno">Carregando comanda...</a>
+  </div>
 
   <script>
     const nome = document.getElementById('nome');
@@ -101,23 +120,33 @@
     const bairro = document.getElementById('bairro');
     const origem = document.getElementById('origem');
     const btn = document.getElementById('btn-enviar');
+    const blocoNovo = document.getElementById('bloco-novo');
+    const blocoRetorno = document.getElementById('bloco-retorno');
+    const btnRetorno = document.getElementById('btn-retorno');
+
+    const hoje = new Date();
+    const diaSemana = hoje.getDay();
+    const linkComanda = diaSemana === 3
+      ? "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa"
+      : "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
+
+    btnRetorno.href = linkComanda;
+    btnRetorno.textContent = diaSemana === 3
+      ? "Ver minha comanda com frete grátis 🎉"
+      : "Ver minha comanda 🍔";
 
     function atualizarBotao() {
       const nomeValido = nome.value.trim() !== '';
       const idadeValida = idade.value.trim() !== '';
       const bairroValido = bairro.value.trim() !== '';
       const origemValida = origem.value !== '';
-
       btn.disabled = !(nomeValido && idadeValida && bairroValido && origemValida);
     }
 
-    nome.addEventListener('input', atualizarBotao);
-    idade.addEventListener('input', atualizarBotao);
-    bairro.addEventListener('input', atualizarBotao);
-    origem.addEventListener('change', atualizarBotao);
-
-    const hoje = new Date();
-    const diaSemana = hoje.getDay();
+    nome?.addEventListener('input', atualizarBotao);
+    idade?.addEventListener('input', atualizarBotao);
+    bairro?.addEventListener('input', atualizarBotao);
+    origem?.addEventListener('change', atualizarBotao);
 
     function atualizarTextoBotao() {
       if (diaSemana === 3) {
@@ -128,6 +157,16 @@
     }
 
     atualizarTextoBotao();
+
+    // Fluxo de retorno automático
+    const clienteJaVeio = localStorage.getItem("clienteJaVeio");
+    if (clienteJaVeio === "sim") {
+      blocoNovo.classList.add("hidden");
+      blocoRetorno.classList.remove("hidden");
+    } else {
+      blocoNovo.classList.remove("hidden");
+      blocoRetorno.classList.add("hidden");
+    }
 
     document.getElementById("form-pre-selo").addEventListener("submit", function (e) {
       e.preventDefault();
@@ -142,12 +181,9 @@
         method: 'POST',
         body: dados
       }).then(() => {
+        localStorage.setItem("clienteJaVeio", "sim");
         setTimeout(() => {
-          if (diaSemana === 3) {
-            window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa";
-          } else {
-            window.location.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
-          }
+          window.location.href = linkComanda;
         }, 500);
       }).catch((error) => {
         alert('Algo deu errado. Tenta de novo ou chama no Whats 😢');
