@@ -17,41 +17,21 @@
       margin: 80px auto;
       background-color: #fff5e1;
     }
-
-    .topo {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .topo img {
-      width: 100%;
-      height: auto;
-      max-height: 380px;
-      object-fit: contain;
-      margin-bottom: 20px;
-    }
-
-    .titulo-volta {
+    h1 {
+      color: #000000;
       text-align: center;
       font-family: 'Impact', 'Arial Black', sans-serif;
-      font-size: 34px;
-      color: #000000;
+      font-size: 32px;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 30px;
     }
-
-    .mensagem-retorno {
-      font-size: 18px;
-      color: #000;
-      background-color: #fff4dc;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    p {
       text-align: center;
-      margin-bottom: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 40px;
     }
-
     label {
       display: block;
       margin-top: 20px;
@@ -60,7 +40,6 @@
       color: white;
       text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
     }
-
     input[type="text"], input[type="number"], select {
       width: 100%;
       padding: 10px;
@@ -70,132 +49,85 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
-
-    a.botao {
-      display: block;
-      text-align: center;
+    button {
       margin-top: 30px;
       padding: 18px;
       width: 100%;
       background-color: #d14b00;
       color: white;
+      border: none;
       font-size: 18px;
       border-radius: 8px;
-      text-decoration: none;
+      cursor: pointer;
     }
-
-    .escondido {
-      display: none;
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
+  <h1>K-Churrasco do Guto</h1>
+  <p>Opa! Seja bem-vindo ao K-Churrasco do Guto, a casa do X mais amado da cidade 😎🍟<br>
+  Antes de abrir tua comanda, deixa eu te conhecer melhor rapidinho…</p>
 
-  <!-- BLOCO PARA NOVOS CLIENTES -->
-  <div id="bloco-novo">
-    <div class="topo">
-      <img src="https://i.imgur.com/e8F0ua2.png" alt="Boas-vindas do Guto">
-    </div>
+  <form id="form-pre-selo" method="POST" action="https://script.google.com/macros/s/AKfycbw9cKvzpNGmw3H2wXpeBnaHM0RSdF2whjMYayMkLlucs_9VBCiTsNY-aKSdtF0CSR0lhw/exec" target="hidden_iframe">
+    <label for="nome">Como tu te chama?</label>
+    <input type="text" name="nome" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
 
-    <form id="form-pre-selo">
-      <label for="nome">Como tu te chama?</label>
-      <input type="text" id="nome" placeholder="Ex: João, Rafa, Dona Vera..." required>
+    <label for="idade">Quantos anos tu tem?</label>
+    <input type="number" name="idade" id="idade" placeholder="Pode mentir, eu não conto 😂" required>
 
-      <label for="idade">Quantos anos tu tem?</label>
-      <input type="number" id="idade" placeholder="Pode mentir, eu não conto 😂" required>
+    <label for="bairro">De qual bairro ou cidade tu é?</label>
+    <input type="text" name="bairro" id="bairro" placeholder="Ex: Centro, Portão..." required>
 
-      <label for="bairro">De qual bairro ou cidade tu é?</label>
-      <input type="text" id="bairro" placeholder="Ex: Centro, Portão..." required>
+    <label for="origem">E me conta… de onde tu tá vindo?</label>
+    <select name="origem" id="origem" required>
+      <option value="">Seleciona uma opção</option>
+      <option value="Instagram">Instagram</option>
+      <option value="Indicação de amigo">Indicação de amigo</option>
+      <option value="WhatsApp">WhatsApp</option>
+      <option value="Google">Google</option>
+      <option value="Já sou cliente">Já sou cliente</option>
+      <option value="Outros">Outros</option>
+    </select>
 
-      <label for="origem">E me conta… de onde tu tá vindo?</label>
-      <select id="origem" required>
-        <option value="">Seleciona uma opção</option>
-        <option value="Instagram">Instagram</option>
-        <option value="Indicação de amigo">Indicação de amigo</option>
-        <option value="WhatsApp">WhatsApp</option>
-        <option value="Google">Google</option>
-        <option value="Já sou cliente">Já sou cliente</option>
-        <option value="Outros">Outros</option>
-      </select>
+    <button type="submit" id="btn-enviar">Ver minha comanda 🍔</button>
+  </form>
 
-      <a id="btn-enviar" class="botao" href="#">Carregando...</a>
-    </form>
-  </div>
-
-  <!-- BLOCO PARA CLIENTE QUE VOLTOU -->
-  <div id="bloco-retorno" class="escondido">
-    <div class="titulo-volta">K-Churrasco do Guto</div>
-    <div class="mensagem-retorno">
-      Olha só quem voltou! 🧡<br><br>
-      Tu nem imagina a alegria que é te ver aqui de novo. É tipo quando a batata sai no ponto certo: quentinha, crocante e perfeita! 🍟<br><br>
-      Seja muito bem-vindo de volta ao <strong>K-Churrasco do Guto</strong>, o lugar onde até o X te reconhece pelo nome 😎<br><br>
-      Fica à vontade, porque aqui tu já é de casa.
-    </div>
-
-    <a id="botao-retorno" class="botao" href="#">Carregando comanda...</a>
-  </div>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
   <script>
     const nome = document.getElementById('nome');
     const idade = document.getElementById('idade');
     const bairro = document.getElementById('bairro');
     const origem = document.getElementById('origem');
-    const btnNovo = document.getElementById('btn-enviar');
-    const btnRetorno = document.getElementById('botao-retorno');
+    const btn = document.getElementById('btn-enviar');
 
-    const blocoNovo = document.getElementById('bloco-novo');
-    const blocoRetorno = document.getElementById('bloco-retorno');
+    function atualizarBotao() {
+      const nomeValido = nome.value.trim() !== '';
+      const idadeValida = idade.value.trim() !== '';
+      const bairroValido = bairro.value.trim() !== '';
+      const origemValida = origem.value !== '';
+
+      btn.disabled = !(nomeValido && idadeValida && bairroValido && origemValida);
+    }
+
+    nome.addEventListener('input', atualizarBotao);
+    idade.addEventListener('input', atualizarBotao);
+    bairro.addEventListener('input', atualizarBotao);
+    origem.addEventListener('change', atualizarBotao);
 
     const hoje = new Date();
-    const diaSemana = hoje.getDay(); // 3 = quarta-feira
-
-    const linkComanda = diaSemana === 3
-      ? "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa"
-      : "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
-
-    btnRetorno.href = linkComanda;
-    btnRetorno.textContent = diaSemana === 3
-      ? "Ver minha comanda com frete grátis 🎉"
-      : "Ver minha comanda 🍔";
-
-    const jaVeio = localStorage.getItem("clienteJaVeio");
-
-    if (jaVeio === "sim") {
-      blocoNovo.classList.add('escondido');
-      blocoRetorno.classList.remove('escondido');
-    } else {
-      blocoNovo.classList.remove('escondido');
-      blocoRetorno.classList.add('escondido');
-
-      function atualizarBotao() {
-        const nomeValido = nome.value.trim() !== '';
-        const idadeValida = idade.value.trim() !== '';
-        const bairroValido = bairro.value.trim() !== '';
-        const origemValida = origem.value !== '';
-
-        const tudoOk = nomeValido && idadeValida && bairroValido && origemValida;
-
-        if (tudoOk) {
-          btnNovo.href = linkComanda;
-          btnNovo.textContent = diaSemana === 3
-            ? "Ver minha comanda com frete grátis 🎉"
-            : "Ver minha comanda 🍔";
-
-          // Salva no navegador que ele já veio
-          localStorage.setItem("clienteJaVeio", "sim");
-        } else {
-          btnNovo.href = "#";
-          btnNovo.textContent = "Carregando...";
-        }
+    const diaSemana = hoje.getDay();
+    function atualizarTextoBotao() {
+      if (diaSemana === 3) {
+        btn.textContent = "Ver minha comanda com frete grátis 🎉";
+      } else {
+        btn.textContent = "Ver minha comanda 🍔";
       }
-
-      nome.addEventListener('input', atualizarBotao);
-      idade.addEventListener('input', atualizarBotao);
-      bairro.addEventListener('input', atualizarBotao);
-      origem.addEventListener('change', atualizarBotao);
-
-      atualizarBotao();
     }
+    atualizarTextoBotao();
   </script>
 </body>
 </html>
