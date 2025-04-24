@@ -49,6 +49,7 @@
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
+      margin-bottom: 20px;
     }
 
     label {
@@ -81,11 +82,6 @@
       font-size: 18px;
       border-radius: 8px;
       text-decoration: none;
-      pointer-events: none;
-    }
-
-    a.botao.habilitado {
-      pointer-events: auto;
     }
 
     .escondido {
@@ -95,8 +91,8 @@
 </head>
 <body>
 
-  <!-- Versão visitante novo -->
-  <div id="bloco-novo" class="">
+  <!-- BLOCO PARA NOVOS CLIENTES -->
+  <div id="bloco-novo">
     <div class="topo">
       <img src="https://i.imgur.com/e8F0ua2.png" alt="Boas-vindas do Guto">
     </div>
@@ -122,11 +118,11 @@
         <option value="Outros">Outros</option>
       </select>
 
-      <a id="btn-enviar" class="botao" href="#" disabled>Carregando...</a>
+      <a id="btn-enviar" class="botao" href="#">Carregando...</a>
     </form>
   </div>
 
-  <!-- Versão cliente que voltou -->
+  <!-- BLOCO PARA CLIENTE QUE VOLTOU -->
   <div id="bloco-retorno" class="escondido">
     <div class="titulo-volta">K-Churrasco do Guto</div>
     <div class="mensagem-retorno">
@@ -135,6 +131,8 @@
       Seja muito bem-vindo de volta ao <strong>K-Churrasco do Guto</strong>, o lugar onde até o X te reconhece pelo nome 😎<br><br>
       Fica à vontade, porque aqui tu já é de casa.
     </div>
+
+    <a id="botao-retorno" class="botao" href="#">Carregando comanda...</a>
   </div>
 
   <script>
@@ -142,10 +140,23 @@
     const idade = document.getElementById('idade');
     const bairro = document.getElementById('bairro');
     const origem = document.getElementById('origem');
-    const btn = document.getElementById('btn-enviar');
+    const btnNovo = document.getElementById('btn-enviar');
+    const btnRetorno = document.getElementById('botao-retorno');
 
     const blocoNovo = document.getElementById('bloco-novo');
     const blocoRetorno = document.getElementById('bloco-retorno');
+
+    const hoje = new Date();
+    const diaSemana = hoje.getDay(); // 3 = quarta-feira
+
+    const linkComanda = diaSemana === 3
+      ? "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa"
+      : "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
+
+    btnRetorno.href = linkComanda;
+    btnRetorno.textContent = diaSemana === 3
+      ? "Ver minha comanda com frete grátis 🎉"
+      : "Ver minha comanda 🍔";
 
     const jaVeio = localStorage.getItem("clienteJaVeio");
 
@@ -156,7 +167,6 @@
       blocoNovo.classList.remove('escondido');
       blocoRetorno.classList.add('escondido');
 
-      // Quando preencher tudo, ativa botão
       function atualizarBotao() {
         const nomeValido = nome.value.trim() !== '';
         const idadeValida = idade.value.trim() !== '';
@@ -166,28 +176,16 @@
         const tudoOk = nomeValido && idadeValida && bairroValido && origemValida;
 
         if (tudoOk) {
-          btn.classList.add('habilitado');
-          btn.removeAttribute('disabled');
+          btnNovo.href = linkComanda;
+          btnNovo.textContent = diaSemana === 3
+            ? "Ver minha comanda com frete grátis 🎉"
+            : "Ver minha comanda 🍔";
 
-          const hoje = new Date();
-          const diaSemana = hoje.getDay();
-
-          if (diaSemana === 3) {
-            btn.textContent = "Ver minha comanda com frete grátis 🎉";
-            btn.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa";
-          } else {
-            btn.textContent = "Ver minha comanda 🍔";
-            btn.href = "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
-          }
-
-          // Marca que esse cliente já veio
+          // Salva no navegador que ele já veio
           localStorage.setItem("clienteJaVeio", "sim");
-
         } else {
-          btn.classList.remove('habilitado');
-          btn.setAttribute('disabled', true);
-          btn.textContent = "Carregando...";
-          btn.href = "#";
+          btnNovo.href = "#";
+          btnNovo.textContent = "Carregando...";
         }
       }
 
@@ -199,6 +197,5 @@
       atualizarBotao();
     }
   </script>
-
 </body>
 </html>
