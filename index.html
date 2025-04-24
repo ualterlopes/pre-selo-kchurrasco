@@ -17,7 +17,8 @@
       margin: 80px auto;
       background-color: #fff5e1;
     }
-    h1 {
+
+    h1, .titulo-volta {
       color: #000000;
       text-align: center;
       font-family: 'Impact', 'Arial Black', sans-serif;
@@ -26,13 +27,18 @@
       letter-spacing: 1px;
       margin-bottom: 30px;
     }
+
     p, .mensagem-retorno {
       text-align: center;
       font-size: 18px;
       line-height: 1.6;
       margin-bottom: 40px;
-      color: #000;
+      background-color: #fff4dc;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
     label {
       display: block;
       margin-top: 20px;
@@ -41,6 +47,7 @@
       color: white;
       text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
     }
+
     input[type="text"], input[type="number"], select {
       width: 100%;
       padding: 10px;
@@ -50,31 +57,40 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
-    button, .link-retorno {
+
+    button, a.botao {
       margin-top: 30px;
       padding: 18px;
       width: 100%;
       background-color: #d14b00;
       color: white;
-      border: none;
       font-size: 18px;
       border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
       text-decoration: none;
+      border: none;
       display: block;
+      text-align: center;
+      cursor: pointer;
     }
-    button:disabled {
-      background-color: #999;
-      cursor: not-allowed;
+
+    .imagem-guto {
+      width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 30px;
     }
-    .hidden {
+
+    .escondido {
       display: none;
     }
   </style>
 </head>
 <body>
+
+  <!-- BLOCO PARA NOVOS CLIENTES -->
   <div id="bloco-novo">
+    <img class="imagem-guto" src="https://i.imgur.com/e8F0ua2.png" alt="Imagem do Guto">
     <h1>K-Churrasco do Guto</h1>
     <p>Opa! Seja bem-vindo ao K-Churrasco do Guto, a casa do X mais amado da cidade 😎🍟<br>
     Antes de abrir tua comanda, deixa eu te conhecer melhor rapidinho…</p>
@@ -104,14 +120,16 @@
     </form>
   </div>
 
-  <div id="bloco-retorno" class="hidden">
-    <h1>K-Churrasco do Guto</h1>
+  <!-- BLOCO PARA CLIENTE QUE VOLTOU -->
+  <div id="bloco-retorno" class="escondido">
+    <div class="titulo-volta">K-Churrasco do Guto</div>
     <div class="mensagem-retorno">
       Olha só quem voltou! 🧡<br><br>
-      Tu já é de casa, então não precisa responder tudo de novo.<br>
-      Só clicar abaixo e ver a comanda direto:
+      Tu nem imagina a alegria que é te ver aqui de novo. É tipo quando a batata sai no ponto certo: quentinha, crocante e perfeita! 🍟<br><br>
+      Seja muito bem-vindo de volta ao <strong>K-Churrasco do Guto</strong>, o lugar onde até o X te reconhece pelo nome 😎<br><br>
+      Fica à vontade, porque aqui tu já é de casa.
     </div>
-    <a href="#" id="btn-retorno" class="link-retorno">Carregando comanda...</a>
+    <a id="botao-retorno" class="botao" href="#">Carregando comanda...</a>
   </div>
 
   <script>
@@ -120,78 +138,66 @@
     const bairro = document.getElementById('bairro');
     const origem = document.getElementById('origem');
     const btn = document.getElementById('btn-enviar');
+
     const blocoNovo = document.getElementById('bloco-novo');
     const blocoRetorno = document.getElementById('bloco-retorno');
-    const btnRetorno = document.getElementById('btn-retorno');
+    const botaoRetorno = document.getElementById('botao-retorno');
 
-    const hoje = new Date();
-    const diaSemana = hoje.getDay();
+    const diaSemana = new Date().getDay();
     const linkComanda = diaSemana === 3
       ? "https://pedido.anota.ai/loja/kchurrascodoguto1?coupon=FRETE%20GRATIS&f=csa"
       : "https://pedido.anota.ai/loja/kchurrascodoguto1?f=msa";
 
-    btnRetorno.href = linkComanda;
-    btnRetorno.textContent = diaSemana === 3
+    botaoRetorno.href = linkComanda;
+    botaoRetorno.textContent = diaSemana === 3
       ? "Ver minha comanda com frete grátis 🎉"
       : "Ver minha comanda 🍔";
 
-    function atualizarBotao() {
-      const nomeValido = nome.value.trim() !== '';
-      const idadeValida = idade.value.trim() !== '';
-      const bairroValido = bairro.value.trim() !== '';
-      const origemValida = origem.value !== '';
-      btn.disabled = !(nomeValido && idadeValida && bairroValido && origemValida);
-    }
-
-    nome?.addEventListener('input', atualizarBotao);
-    idade?.addEventListener('input', atualizarBotao);
-    bairro?.addEventListener('input', atualizarBotao);
-    origem?.addEventListener('change', atualizarBotao);
-
-    function atualizarTextoBotao() {
-      if (diaSemana === 3) {
-        btn.textContent = "Ver minha comanda com frete grátis 🎉";
-      } else {
-        btn.textContent = "Ver minha comanda 🍔";
-      }
-    }
-
-    atualizarTextoBotao();
-
-    // Fluxo de retorno automático
-    const clienteJaVeio = localStorage.getItem("clienteJaVeio");
-    if (clienteJaVeio === "sim") {
-      blocoNovo.classList.add("hidden");
-      blocoRetorno.classList.remove("hidden");
+    if (localStorage.getItem("clienteJaVeio") === "sim") {
+      blocoNovo.classList.add("escondido");
+      blocoRetorno.classList.remove("escondido");
     } else {
-      blocoNovo.classList.remove("hidden");
-      blocoRetorno.classList.add("hidden");
-    }
+      blocoNovo.classList.remove("escondido");
+      blocoRetorno.classList.add("escondido");
 
-    document.getElementById("form-pre-selo").addEventListener("submit", function (e) {
-      e.preventDefault();
+      function atualizarBotao() {
+        const nomeValido = nome.value.trim() !== '';
+        const idadeValida = idade.value.trim() !== '';
+        const bairroValido = bairro.value.trim() !== '';
+        const origemValida = origem.value !== '';
 
-      btn.disabled = true;
-      btn.textContent = "Carregando... ⏳";
+        btn.disabled = !(nomeValido && idadeValida && bairroValido && origemValida);
+      }
 
-      const form = e.target;
-      const dados = new FormData(form);
+      nome.addEventListener('input', atualizarBotao);
+      idade.addEventListener('input', atualizarBotao);
+      bairro.addEventListener('input', atualizarBotao);
+      origem.addEventListener('change', atualizarBotao);
 
-      fetch(form.action, {
-        method: 'POST',
-        body: dados
-      }).then(() => {
-        localStorage.setItem("clienteJaVeio", "sim");
-        setTimeout(() => {
+      document.getElementById("form-pre-selo").addEventListener("submit", function (e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.textContent = "Carregando... ⏳";
+
+        const form = e.target;
+        const dados = new FormData(form);
+
+        fetch(form.action, {
+          method: 'POST',
+          body: dados
+        }).then(() => {
+          localStorage.setItem("clienteJaVeio", "sim");
           window.location.href = linkComanda;
-        }, 500);
-      }).catch((error) => {
-        alert('Algo deu errado. Tenta de novo ou chama no Whats 😢');
-        console.error(error);
-        btn.disabled = false;
-        atualizarTextoBotao();
+        }).catch((error) => {
+          alert('Algo deu errado. Tenta de novo 🙏');
+          console.error(error);
+          btn.disabled = false;
+          btn.textContent = diaSemana === 3
+            ? "Ver minha comanda com frete grátis 🎉"
+            : "Ver minha comanda 🍔";
+        });
       });
-    });
+    }
   </script>
 </body>
 </html>
